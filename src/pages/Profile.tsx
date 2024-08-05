@@ -3,7 +3,7 @@ import React, { FormEvent, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import userData from './auth/getdata';
-import NotFound from './NotFound';
+import NotFound from './components/NotFound';
 
 const Profile = () => {
     type QuizData = {
@@ -163,7 +163,7 @@ const Profile = () => {
 
     return (
         <>        
-        {userdata && (
+        {userdata.id && (
             <>
                 <div className='p-5 border-b-2 border-gray-200'>
                     <div>
@@ -249,7 +249,7 @@ const Profile = () => {
 
             </>
         )}
-        {!userdata && (
+        {!userdata.id && (
             <NotFound />
         )}
         </>

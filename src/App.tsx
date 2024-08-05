@@ -10,7 +10,8 @@ import Quizzes from './pages/Quizzes'
 import Header from './pages/components/Header'
 import AttemptQuiz from './pages/AttemptQuiz'
 import AllQuizzes from './pages/AllQuizzes'
-import NotFound from './pages/NotFound'
+import NotFound from './pages/components/NotFound'
+import Logout from './pages/auth/Logout'
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path='/quizzes' element={<AllQuizzes />} />
         <Route path='/quiz/:id' element={<Quizzes />} />
         <Route path='/attempt/:id' element={<AttemptQuiz />} />
+        <Route path='/logout' element={<Logout />} />
         <Route path='/*' element={<NotFound />} />
       </Routes>
       <ToastContainer />
