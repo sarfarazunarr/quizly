@@ -44,8 +44,8 @@ const Profile = () => {
                 }
             } catch (error: any) {
                 console.log(error)
-                if (error.response.status == 400) {
-                    toast.info("No Quiz Found Start Creating it!", { autoClose: 1000 })
+                if (error.response.status == 404 || error.response.status == 400) {
+                    console.log('Do nothing')
                 }
                 toast.error(error.response.data.message)
             }
@@ -64,8 +64,6 @@ const Profile = () => {
                 },
                 withCredentials: true
             });
-            console.log(data);
-            console.log(response)
             if (response.status === 200) {
                 toast.success(response.data.message, { autoClose: 1000 });
                 setPending(false);
@@ -205,8 +203,6 @@ const Profile = () => {
                     </div>
                 </div>
 
-
-
                 {create && (
                     <div id="new-quiz" className="flex overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] bg-blue-700/35 filter backdrop-blur-md max-h-full">
                         <div className="relative p-4 w-full max-w-md max-h-full bg-blue-950 rounded-md">
@@ -250,6 +246,7 @@ const Profile = () => {
             </>
         )}
         {!userdata.id && (
+            
             <NotFound />
         )}
         </>
