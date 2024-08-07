@@ -66,7 +66,7 @@ const Register = () => {
             if (image) {
                 formData.append('image', image);
             }
-            const response = await axios.post('http://localhost/quizline/uploadImage.php', formData, {
+            const response = await axios.post(`${origin}uploadImage.php`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -79,8 +79,7 @@ const Register = () => {
                     isLoading: false,
                     autoClose: 2000,
                 });
-                setData({...data, profileImage: `http://localhost/quizline/${response.data.imageUrl}`})
-                console.log(response.data);
+                setData({...data, profileImage: `${origin + response.data.imageUrl}`})
             }
         } catch (error) {
             toast.update(notify, {

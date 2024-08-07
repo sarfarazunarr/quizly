@@ -4,10 +4,11 @@ import { useNavigate } from "react-router";
 
 const Logout = () => {
   const nav = useNavigate();
+  let origin = import.meta.env.VITE_API_ORIGIN;    
 
   const logout = async () => {
     try {
-        const response = await axios.get('http://localhost/quizline/auth/logout.php', {
+        const response = await axios.get(`${origin}auth/logout.php`, {
             headers: {
                 'Content-Type': 'application/json',
             },

@@ -12,6 +12,8 @@ import AttemptQuiz from './pages/AttemptQuiz'
 import AllQuizzes from './pages/AllQuizzes'
 import NotFound from './pages/components/NotFound'
 import Logout from './pages/auth/Logout'
+import Submission from './pages/Submissions'
+import ViewScore from './pages/ViewScore'
 
 function App() {
   return (
@@ -25,7 +27,9 @@ function App() {
         <Route path='/add-questions/:id' element={<Questions />} />
         <Route path='/quizzes' element={<AllQuizzes />} />
         <Route path='/quiz/:id' element={<Quizzes />} />
+        <Route path='/quiz-submissions/:id' element={<Submission />} />
         <Route path='/attempt/:id' element={<AttemptQuiz />} />
+        <Route path='/view-score' element={<ViewScore />} />
         <Route path='/logout' element={<Logout />} />
         <Route path='/*' element={<NotFound />} />
       </Routes>

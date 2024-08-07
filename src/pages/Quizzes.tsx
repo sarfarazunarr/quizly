@@ -19,11 +19,12 @@ const Quizzes = () => {
   }
   const [quiz, setQuiz] = useState<Quiz>();
   const [notfound, setNotfound] = useState(false);
+  let origin = import.meta.env.VITE_API_ORIGIN;    
 
   useEffect(() => {
     const quizdata = async () => {
       try {
-        const response = await axios.get(`http://localhost/quizline/quiz/get-quiz.php?id=${id}`, {
+        const response = await axios.get(`${origin}quiz/get-quiz.php?id=${id}`, {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -84,7 +85,7 @@ const Quizzes = () => {
                 <input className='bg-white border border-slate-400 outline-none p-2 rounded-md text-gray-900' value={location.href} readOnly onClick={copy}></input>
               </div>
             </div>
-            <div id='quizcard' className='w-2/5 mr-20 ml-20  m-10 bg-blue-900 p-5 rounded-md'>
+            <div id='quizcard' className='w-2/5 mr-20 ml-20 h-fit  m-10 bg-blue-900 p-5 rounded-md'>
               <h6 className="font-semibold text-2xl py-2 text-white">Quiz Info</h6>
               <ul className="list-none text-white font-normal ml-3">
                 <li>Title: {quiz.title}</li>
@@ -95,6 +96,7 @@ const Quizzes = () => {
               <div className='flex justify-center items-center my-5 gap-2'>
                 <Link to={`/attempt/${quiz.id}`} className='bg-white px-3 py-1 rounded-md text-blue-950 font-semibold hover:bg-transparent hover:text-white hover:border-white border border-transparent'>Attempt Now</Link>
                 <button className='bg-blue-950 px-3 py-1 rounded-md text-white font-semibold hover:bg-white hover:text-blue-950 hover:border-white border border-transparent' onClick={() => share(quiz.title, quiz.description)}>Share Now</button>
+                <Link to={'/view-score'} className='bg-white px-3 py-1 rounded-md text-blue-800 font-semibold hover:bg-blue-950 hover:text-white hover:border-white border border-transparent'>View Score</Link>
               </div>
             </div>
           </div>

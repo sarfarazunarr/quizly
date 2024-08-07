@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
     const nav = useNavigate();
+    let origin = import.meta.env.VITE_API_ORIGIN;    
+
     const [data, setData] = useState({
         email: "",
         password: ""
@@ -22,7 +24,7 @@ const Login = () => {
         e.preventDefault();
         setPending(true)
         try {
-            const response = await axios.post('http://localhost/quizline/auth/login.php', data, {
+            const response = await axios.post(`${origin}auth/login.php`, data, {
                 withCredentials: true,
                 headers: {
                     'Content-Type': 'application/json',
@@ -67,9 +69,9 @@ const Login = () => {
                 </div>
 
                 <div className="text-grey-dark mt-6">
-                    New Here?
+                    New Here? 
                     <a className="no-underline border-b border-blue text-blue" href="/register">
-                        Signup Now
+                        . Signup Now
                     </a>.
                 </div>
             </div>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { FormEvent, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import userData from './auth/getdata';
 import NotFound from './components/NotFound';
@@ -26,12 +26,13 @@ const Profile = () => {
         category: '',
         description: ''
     });
-
+    let origin = import.meta.env.VITE_API_ORIGIN;    
+    const nav = useNavigate();
     useEffect(() => {
         userData(setUserdata);
         const getData = async () => {
             try {
-                const response = await axios.get('http://localhost/quizline/quiz/quizzes.php', {
+                const response = await axios.get(`${origin}quiz/quizzes.php`, {
                     headers: {
                         'Content-Type': 'application/json',
                     },
@@ -58,7 +59,7 @@ const Profile = () => {
         setPending(true);
         try {
 
-            const response = await axios.post('http://localhost/quizline/quiz/create.php', data, {
+            const response = await axios.post(`${origin}quiz/create.php`, data, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -87,9 +88,9 @@ const Profile = () => {
         setPending(true);
         e.preventDefault();
 
-        let notify = toast.loading('Updating course...');
+        let notify = toast.loading('Updating Quiz...');
         try {
-            const response = await axios.put('http://localhost/quizline/quiz/update.php', data, {
+            const response = await axios.put(`${origin}quiz/update.php`, data, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -126,7 +127,7 @@ const Profile = () => {
 
         let notify = toast.loading('Deleting course...');
         try {
-            const response = await axios.delete('http://localhost/quizline/quiz/delete.php', {
+            const response = await axios.delete(`${origin}quiz/delete.php`, {
                 data: { id: finalid },
                 headers: {
                     'Content-Type': 'application/json',
@@ -184,11 +185,12 @@ const Profile = () => {
                                         <div className='flex justify-between'>
                                             <div className=''></div>
                                         </div>
-                                        <div className='flex justify-center pt-3 opacity-20 group-hover:opacity-100 transition-all duration-300'>
+                                        <div className='flex justify-center pt-3 transition-all duration-300'>
                                             <Link to={"/add-questions/" + item.id} className='border-blue-500 bg-transparent border hover:bg-blue-600 rounded-md mr-2 px-2 text-white' >Questions</Link>
-                                            <Link to={"/quiz/" + item.id} className='border-blue-500 bg-transparent border hover:bg-blue-600 rounded-md px-2 text-white'>View</Link>
-                                            <button className='border-green-500 bg-transparent border hover:bg-green-600 rounded-md px-2 text-white mx-3' onClick={(e: any) => setupdate(e, item)}>Edit</button>
-                                            <button className='border-red-500 bg-transparent border hover:bg-red-600 rounded-md px-2 text-white' onClick={() => deleteQuiz(item.id)}>Delete</button>
+                                            <Link to={"/quiz-submissions/" + item.id} className='border-blue-500 bg-transparent border hover:bg-blue-600 rounded-md mr-2 px-2 text-white' >Submissions</Link>
+                                                <img src="https://www.svgrepo.com/show/501052/view.svg" className=" mx-2 -ml-1 -mr-1 h-7 p-1 bg-white cursor-pointer filter invert rounded-full" title='View' onClick={() => nav(`/quiz/${item.id}`)} />
+                                            <img src="https://www.svgrepo.com/show/505368/edit-3.svg" className=" mx-2  -mr-1 h-7 p-1 bg-red-500 filter cursor-pointer invert rounded-full" onClick={(e: any) => setupdate(e, item)} title='Update' />
+                                            <img src="https://www.svgrepo.com/show/488148/delete.svg" className=" mx-2 mr-0 h-7 p-1 bg-emerald-500 cursor-pointer filter invert rounded-full" onClick={() => deleteQuiz(item.id)} title='Delete' />
                                         </div>
                                     </div>
                                 </div>
@@ -197,8 +199,8 @@ const Profile = () => {
                         })
 
                     )}
-                    <div className='rounded-md w-full h-64 border-gray-400 border-dashed hover:border-white border-2 hover:shadow-xl hover:shadow-blue-400 size-[25%] group transition-all duration-300 flex justify-center items-center flex-col cursor-pointer' onClick={() => setCreate(true)}>
-                        <img src='https://www.svgrepo.com/show/526461/add-circle.svg' className='size-28 object-cover rounded-t-md filter invert opacity-50 group-hover:opacity-100' />
+                    <div className='rounded-md w-full h-auto border-blue-400 border-dashed hover:border-black border-2 hover:shadow-xl hover:shadow-blue-850 size-[25%] group transition-all duration-300 flex justify-center items-center flex-col cursor-pointer' onClick={() => setCreate(true)}>
+                        <img src='https://www.svgrepo.com/show/526461/add-circle.svg' className='size-28 object-cover rounded-t-md opacity-50 group-hover:opacity-100' />
                         <h6 className='text-xl text-white font-semibold'>Create Course</h6>
                     </div>
                 </div>

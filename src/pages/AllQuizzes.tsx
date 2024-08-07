@@ -13,11 +13,12 @@ const AllQuizzes = () => {
     }
     const [quiz, setQuiz] = useState<Quiz[]>([]);
     const [searchQuery, setSearchQuery] = useState('');
+    let origin = import.meta.env.VITE_API_ORIGIN;    
 
     useEffect(() => {
         const quizdata = async () => {
             try {
-                const response = await axios.get(`http://localhost/quizline/quiz/public_quizzes.php`, {
+                const response = await axios.get(`${origin}quiz/public_quizzes.php`, {
                     headers: {
                         'Content-Type': 'application/json',
                     },

@@ -30,11 +30,12 @@ const Questions = () => {
     const [create, setCreate] = useState(false);
     const [update, setUpdate] = useState(false);
     const [refresh, setRefresh] = useState(0);
+    let origin = import.meta.env.VITE_API_ORIGIN;    
 
     useEffect(() => {
         const quizdata = async () => {
             try {
-                const response = await axios.get(`http://localhost/quizline/quiz/get-quiz.php?id=${id}`, {
+                const response = await axios.get(`${origin}quiz/get-quiz.php?id=${id}`, {
                     headers: {
                         'Content-Type': 'application/json',
                     },
@@ -50,7 +51,7 @@ const Questions = () => {
 
         const questionsdata = async () => {
             try {
-                const response = await axios.get(`http://localhost/quizline/question/questions.php?id=${id}`, {
+                const response = await axios.get(`${origin}question/questions.php?id=${id}`, {
                     headers: {
                         'Content-Type': 'application/json',
                     },
@@ -85,7 +86,7 @@ const Questions = () => {
 
         try {
 
-            const response = await axios.post('http://localhost/quizline/question/add.php', question, {
+            const response = await axios.post(`${origin}question/add.php`, question, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -114,7 +115,7 @@ const Questions = () => {
        
         let notify = toast.loading('Updating Question...');
         try {
-            const response = await axios.put('http://localhost/quizline/question/update.php', question, {
+            const response = await axios.put(`${origin}question/update.php`, question, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -145,7 +146,7 @@ const Questions = () => {
        
         let notify = toast.loading('Deleting Question...');
         try {
-            const response = await axios.delete('http://localhost/quizline/question/delete.php', {
+            const response = await axios.delete(`${origin}question/delete.php`, {
                 data: {id: finalid},
                 headers: {
                   'Content-Type': 'application/json',
@@ -193,24 +194,24 @@ const Questions = () => {
                 {questions.map((item, index) => {
                     const possibleAnswers = JSON.parse(item?.possible_answers);
                     return (
-                        <div key={index} className='question w-full p-3 group'>
-                            <div className='flex bg-slate-300 rounded-md  p-3 justify-between'>
-                                <h3 className='text-xl text-gray-800 font-normal'>{item.question_text}</h3>
+                        <div key={index} className='question  w-full p-1 group'>
+                            <div className='flex bg-blue-950 rounded-md  p-3 justify-between'>
+                                <h3 className='text-xl truncate text-white font-normal'>{item.question_text}</h3>
                                 <div className='flex justify-end items-center gap-2'>
-                                <div className='flex justify-center pt-3 opacity-20 group-hover:opacity-100 transition-all duration-300'>
+                                <div className='flex justify-center items-center'>
                                    
-                                    <button className='border-green-500 bg-transparent border hover:bg-green-600 rounded-md px-2 text-white mx-3' onClick={(e: any) => setupdate(e, item)}>Edit</button>
-                                    <button className='border-red-500 bg-transparent border hover:bg-red-600 rounded-md px-2 text-white' onClick={() => deleteQuestion(item.id)}>Delete</button>
+                                    <button className='border-green-500 bg-white border hover:bg-green-600 rounded-md px-2 py-1 text-black mx-3' onClick={(e: any) => setupdate(e, item)}>Edit</button>
+                                    <button className='border-red-500 bg-white border hover:bg-red-600 rounded-md px-2 py-1 text-black' onClick={() => deleteQuestion(item.id)}>Delete</button>
                                 </div>
                                     <span className='px-2 py-1 bg-green-600 text-white font-semibold rounded-md'>{item.question_type}</span>
-                                    <span className={`${item.question_type == 'MCQs' ? 'block' : "hidden"} text-gray-600 cursor-pointer`} onClick={(e) => showData(e, index)}>Open</span>
+                                    <span className={`${item.question_type == 'MCQs' ? 'block' : "hidden"} text-white cursor-pointer`} onClick={(e) => showData(e, index)}>Open</span>
                                 </div>
                             </div>
-                            <div id={`${index}`} className='my-2 hidden w-full rounded-md bg-slate-200 p-5'>
+                            <div id={`${index}`} className='my-2 hidden w-full rounded-md bg-blue-950 text-white p-5'>
                                 <ul className='list-none'>
                                 {possibleAnswers.map((ans:string, key:number) => {
                                     return (
-                                        <li key={key} className={`${ans == item.correct_answer ? 'bg-green-600 text-white font-semibold rounded-md' : ''} text-gray-700 px-2`}>{ans}</li>
+                                        <li key={key} className={`${ans == item.correct_answer ? 'bg-green-600 text-white font-semibold rounded-md' : ''} text-white px-2`}>{ans}</li>
                                     )
                                 })}
                                 </ul>

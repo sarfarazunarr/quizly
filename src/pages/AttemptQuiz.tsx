@@ -56,11 +56,12 @@ const AttemptQuiz = () => {
     const [descriptiveAnswer, setDescriptiveAnswer] = useState("");
     const [result, setResult] = useState(false);
 
+    let origin = import.meta.env.VITE_API_ORIGIN;    
 
     useEffect(() => {
         const quizdata = async () => {
             try {
-                const response = await axios.get(`http://localhost/quizline/quiz/get-quiz.php?id=${id}`, {
+                const response = await axios.get(`${origin}quiz/get-quiz.php?id=${id}`, {
                     headers: {
                         'Content-Type': 'application/json',
                     },
@@ -75,7 +76,7 @@ const AttemptQuiz = () => {
         };
         const questionsdata = async () => {
             try {
-                const response = await axios.get(`http://localhost/quizline/question/questions.php?id=${id}`, {
+                const response = await axios.get(`${origin}question/questions.php?id=${id}`, {
                     headers: {
                         'Content-Type': 'application/json',
                     },
@@ -144,7 +145,7 @@ const AttemptQuiz = () => {
         
         let notify = toast.loading("Submitting Data...")
         try {
-           const response = await axios.post('http://localhost/quizline/quiz/submit.php', submission, {
+           const response = await axios.post(`${origin}quiz/submit.php`, submission, {
                 headers: {
                     'Content-Type': 'application/json',
                 }
